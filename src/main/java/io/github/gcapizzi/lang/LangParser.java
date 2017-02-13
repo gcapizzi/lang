@@ -1,9 +1,6 @@
 package io.github.gcapizzi.lang;
 
-import io.github.gcapizzi.lang.ast.VariableNode;
-import io.github.gcapizzi.lang.ast.MethodCallNode;
-import io.github.gcapizzi.lang.ast.Node;
-import io.github.gcapizzi.lang.ast.StringLiteralNode;
+import io.github.gcapizzi.lang.ast.*;
 import org.javafp.data.IList;
 import org.javafp.parsecj.Parser;
 import org.javafp.parsecj.State;
@@ -31,8 +28,9 @@ class LangParser {
                             identifier.bind(methodName ->
                                     args.bind(arguments ->
                                             retn(new MethodCallNode(target, methodName, toList(arguments)))))));
+    private final Parser<Character, Node> program = sepBy(methodCall, chr('\n')).bind(statements -> retn(new ProgramNode(statements)));
 
     Node parse(String source) throws Exception {
-        return methodCall.parse(State.of(source)).getResult();
+        return program.parse(State.of(source)).getResult();
     }
 }
