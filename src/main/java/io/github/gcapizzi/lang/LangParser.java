@@ -1,7 +1,6 @@
 package io.github.gcapizzi.lang;
 
 import io.github.gcapizzi.lang.ast.*;
-import io.github.gcapizzi.lang.model.MethodCallsNode;
 import org.javafp.data.IList;
 import org.javafp.parsecj.Parser;
 import org.javafp.parsecj.State;
