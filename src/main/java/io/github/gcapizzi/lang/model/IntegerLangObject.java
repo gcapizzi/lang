@@ -11,11 +11,8 @@ public class IntegerLangObject implements LangObject {
 
     @Override
     public LangObject invokeMethod(String methodName, List<LangObject> args) {
-        if (methodName.equals("plus")) {
-            IntegerLangObject arg = (IntegerLangObject) args.get(0);
-            return new IntegerLangObject(value + arg.value);
-        }
-        return null;
+        IntegerLangObject arg = (IntegerLangObject) args.get(0);
+        return new IntegerLangObject(value + arg.value);
     }
 
     @Override
