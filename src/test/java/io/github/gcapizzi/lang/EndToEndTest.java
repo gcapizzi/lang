@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class EndToEndTest {
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    private final LangInterpreter interpreter = new LangInterpreter(new LangParser());
+    private final LangInterpreter interpreter = new LangInterpreter(LangParser.build());
 
     @Before
     public void setUp() throws Exception {
@@ -20,15 +20,26 @@ public class EndToEndTest {
 
     @Test
     public void itExecutesAMethodCall() throws Exception {
-        String source = "IO.println(\"Hello, world!\")";
-        interpreter.run(source);
-        assertThat(outputStream.toString(), is("Hello, world!\n"));
+        assertOutput("IO.println(\"Hello, world!\")", "Hello, world!\n");
     }
 
     @Test
     public void itExecutesMultipleStatements() throws Exception {
-        String source = "IO.println(\"Foo\")\nIO.println(\"Bar\")";
+        assertOutput("IO.println(\"Foo\")\nIO.println(\"Bar\")", "Foo\nBar\n");
+    }
+
+    @Test
+    public void itHasIntegers() throws Exception {
+        assertOutput("IO.println(2.plus(2))", "4\n");
+    }
+
+    private void assertOutput(String source, String expectedOutput) throws Exception {
+        String output = run(source);
+        assertThat(output, is(expectedOutput));
+    }
+
+    private String run(String source) throws Exception {
         interpreter.run(source);
-        assertThat(outputStream.toString(), is("Foo\nBar\n"));
+        return outputStream.toString();
     }
 }
