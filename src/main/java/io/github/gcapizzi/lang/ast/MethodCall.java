@@ -11,11 +11,11 @@ public class MethodCall {
         this.arguments = arguments;
     }
 
-    public String getMethodName() {
+    String getMethodName() {
         return methodName;
     }
 
-    public List<Node> getArguments() {
+    List<Node> getArguments() {
         return arguments;
     }
 }

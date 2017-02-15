@@ -30,7 +30,7 @@ public class EndToEndTest {
 
     @Test
     public void itHasIntegers() throws Exception {
-        assertOutput("IO.println(2.plus(2))", "4\n");
+        assertOutput("IO.println(1.plus(2).times(2).minus(2).divided_by(4))", "1\n");
     }
 
     private void assertOutput(String source, String expectedOutput) throws Exception {
