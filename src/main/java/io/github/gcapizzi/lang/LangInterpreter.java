@@ -16,7 +16,10 @@ class LangInterpreter {
 
     void run(String source) throws Exception {
         Node node = parser.parse(source);
+
         Map<String, LangObject> context = ImmutableMap.of("IO", new IoLangObject());
-        node.evaluate(context);
+        LangVisitor langVisitor = new LangVisitor(context);
+
+        node.evaluate(langVisitor);
     }
 }

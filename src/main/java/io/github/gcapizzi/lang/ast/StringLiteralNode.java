@@ -1,9 +1,7 @@
 package io.github.gcapizzi.lang.ast;
 
+import io.github.gcapizzi.lang.LangVisitor;
 import io.github.gcapizzi.lang.model.LangObject;
-import io.github.gcapizzi.lang.model.StringLangObject;
-
-import java.util.Map;
 
 public class StringLiteralNode implements Node {
     private String value;
@@ -12,8 +10,12 @@ public class StringLiteralNode implements Node {
         this.value = value;
     }
 
+    public String getValue() {
+        return value;
+    }
+
     @Override
-    public LangObject evaluate(Map<String, LangObject> context) {
-        return new StringLangObject(value);
+    public LangObject evaluate(LangVisitor visitor) {
+        return visitor.visit(this);
     }
 }

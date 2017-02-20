@@ -1,8 +1,7 @@
 package io.github.gcapizzi.lang.ast;
 
+import io.github.gcapizzi.lang.LangVisitor;
 import io.github.gcapizzi.lang.model.LangObject;
-
-import java.util.Map;
 
 public class VariableNode implements Node {
     private String name;
@@ -11,8 +10,12 @@ public class VariableNode implements Node {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
-    public LangObject evaluate(Map<String, LangObject> context) {
-        return context.get(name);
+    public LangObject evaluate(LangVisitor visitor) {
+        return visitor.visit(this);
     }
 }

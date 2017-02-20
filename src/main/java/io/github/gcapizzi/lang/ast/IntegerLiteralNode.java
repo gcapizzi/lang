@@ -1,9 +1,7 @@
 package io.github.gcapizzi.lang.ast;
 
-import io.github.gcapizzi.lang.model.IntegerLangObject;
+import io.github.gcapizzi.lang.LangVisitor;
 import io.github.gcapizzi.lang.model.LangObject;
-
-import java.util.Map;
 
 public class IntegerLiteralNode implements Node {
     private Integer value;
@@ -12,8 +10,12 @@ public class IntegerLiteralNode implements Node {
         this.value = value;
     }
 
+    public Integer getValue() {
+        return value;
+    }
+
     @Override
-    public LangObject evaluate(Map<String, LangObject> context) {
-        return new IntegerLangObject(value);
+    public LangObject evaluate(LangVisitor visitor) {
+        return visitor.visit(this);
     }
 }

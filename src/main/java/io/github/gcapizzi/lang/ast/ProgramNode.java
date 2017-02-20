@@ -1,9 +1,8 @@
 package io.github.gcapizzi.lang.ast;
 
+import io.github.gcapizzi.lang.LangVisitor;
 import io.github.gcapizzi.lang.model.LangObject;
 import org.javafp.data.IList;
-
-import java.util.Map;
 
 public class ProgramNode implements Node {
     private IList<Node> statements;
@@ -12,9 +11,12 @@ public class ProgramNode implements Node {
         this.statements = statements;
     }
 
+    public IList<Node> getStatements() {
+        return statements;
+    }
+
     @Override
-    public LangObject evaluate(Map<String, LangObject> context) {
-        statements.forEach(s -> s.evaluate(context));
-        return null;
+    public LangObject evaluate(LangVisitor visitor) {
+        return visitor.visit(this);
     }
 }

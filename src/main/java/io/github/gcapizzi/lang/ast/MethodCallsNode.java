@@ -1,11 +1,9 @@
 package io.github.gcapizzi.lang.ast;
 
+import io.github.gcapizzi.lang.LangVisitor;
 import io.github.gcapizzi.lang.model.LangObject;
 
 import java.util.List;
-import java.util.Map;
-
-import static java.util.stream.Collectors.toList;
 
 public class MethodCallsNode implements Node {
     private final Node target;
@@ -16,18 +14,16 @@ public class MethodCallsNode implements Node {
         this.methodCalls = methodCalls;
     }
 
+    public Node getTarget() {
+        return target;
+    }
+
+    public List<MethodCall> getMethodCalls() {
+        return methodCalls;
+    }
+
     @Override
-    public LangObject evaluate(Map<String, LangObject> context) {
-        LangObject result = target.evaluate(context);
-
-        for (MethodCall methodCall : methodCalls) {
-            List<LangObject> evaluatedArgs = methodCall.getArguments().stream()
-                    .map(arg -> arg.evaluate(context))
-                    .collect(toList());
-
-            result = result.invokeMethod(methodCall.getMethodName(), evaluatedArgs);
-        }
-
-        return result;
+    public LangObject evaluate(LangVisitor visitor) {
+        return visitor.visit(this);
     }
 }
