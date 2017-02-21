@@ -11,7 +11,8 @@ public class StringLangObject implements LangObject {
 
     @Override
     public LangObject invokeMethod(String methodName, List<LangObject> args) {
-        return null;
+        StringLangObject arg = (StringLangObject) args.get(0);
+        return new StringLangObject(value + arg.value);
     }
 
     @Override

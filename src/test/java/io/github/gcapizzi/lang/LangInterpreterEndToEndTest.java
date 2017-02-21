@@ -9,7 +9,7 @@ import java.io.PrintStream;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class EndToEndTest {
+public class LangInterpreterEndToEndTest {
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private final LangInterpreter interpreter = new LangInterpreter(LangParser.build());
 
@@ -31,6 +31,16 @@ public class EndToEndTest {
     @Test
     public void itHasIntegers() throws Exception {
         assertOutput("IO.println(1.plus(2).times(2).minus(2).divided_by(4))", "1\n");
+    }
+
+    @Test
+    public void itSupportsMultipleArguments() throws Exception {
+        assertOutput("IO.println(\"Hello,\", \"world!\")", "Hello, world!\n");
+    }
+
+    @Test
+    public void itSupportsNestedMethodCalls() throws Exception {
+        assertOutput("IO.println(\"foo\", \"ba\".concat(\"r\"))", "foo bar\n");
     }
 
     private void assertOutput(String source, String expectedOutput) throws Exception {

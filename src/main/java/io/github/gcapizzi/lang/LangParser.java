@@ -31,7 +31,7 @@ class LangParser {
         final Parser<Character, Node> variable = identifier.bind(i -> retn(new VariableNode(i)));
         final Parser<Character, Node> atom = integer.or(string).or(variable);
 
-        final Parser<Character, IList<Node>> argsList = sepBy(expression, comma).bind(args -> retn(args));
+        final Parser<Character, IList<Node>> argsList = sepBy(expression, comma.then(space.optional())).bind(args -> retn(args));
         final Parser<Character, IList<Node>> args = between(openParen, closedParen, argsList);
         final Parser<Character, MethodCall> methodCall = dot.then(
                 identifier.bind(methodName ->
