@@ -1,7 +1,6 @@
 package io.github.gcapizzi.lang.ast;
 
-import io.github.gcapizzi.lang.LangVisitor;
-import io.github.gcapizzi.lang.model.LangObject;
+import io.github.gcapizzi.lang.visitor.LangVisitor;
 
 public class IntegerLiteralNode implements Node {
     private Integer value;
@@ -15,7 +14,7 @@ public class IntegerLiteralNode implements Node {
     }
 
     @Override
-    public LangObject evaluate(LangVisitor visitor) {
+    public <T> T evaluate(LangVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

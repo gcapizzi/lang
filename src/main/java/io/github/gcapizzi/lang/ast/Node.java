@@ -1,8 +1,7 @@
 package io.github.gcapizzi.lang.ast;
 
-import io.github.gcapizzi.lang.LangVisitor;
-import io.github.gcapizzi.lang.model.LangObject;
+import io.github.gcapizzi.lang.visitor.LangVisitor;
 
 public interface Node {
-    LangObject evaluate(LangVisitor visitor);
+    <T> T evaluate(LangVisitor<T> visitor);
 }
