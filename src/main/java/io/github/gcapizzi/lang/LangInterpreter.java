@@ -20,7 +20,7 @@ class LangInterpreter {
         Node node = parser.parse(source);
 
         Map<String, LangObject> context = ImmutableMap.of("IO", new IoLangObject());
-        LangVisitor<LangObject> langVisitor = new InterpreterLangVisitor(context);
+        LangVisitor langVisitor = new InterpreterLangVisitor(context);
 
         node.evaluate(langVisitor);
     }

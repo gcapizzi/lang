@@ -2,14 +2,14 @@ package io.github.gcapizzi.lang.visitor;
 
 import io.github.gcapizzi.lang.ast.*;
 
-public interface LangVisitor<T> {
-    T visit(IntegerLiteralNode integerLiteralNode);
+public interface LangVisitor {
+    void visit(IntegerLiteralNode integerLiteralNode);
 
-    T visit(StringLiteralNode stringLiteralNode);
+    void visit(StringLiteralNode stringLiteralNode);
 
-    T visit(VariableNode variableNode);
+    void visit(VariableNode variableNode);
 
-    T visit(MethodCallsNode methodCallsNode);
+    void visit(MethodCallsNode methodCallsNode);
 
-    T visit(ProgramNode programNode);
+    void visit(ProgramNode programNode);
 }

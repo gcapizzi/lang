@@ -14,7 +14,7 @@ public class VariableNode implements Node {
     }
 
     @Override
-    public <T> T evaluate(LangVisitor<T> visitor) {
-        return visitor.visit(this);
+    public void evaluate(LangVisitor visitor) {
+        visitor.visit(this);
     }
 }

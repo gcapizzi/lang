@@ -1,55 +1,68 @@
 package io.github.gcapizzi.lang.visitor;
 
+import com.google.common.collect.Lists;
 import io.github.gcapizzi.lang.ast.*;
 import io.github.gcapizzi.lang.model.IntegerLangObject;
 import io.github.gcapizzi.lang.model.LangObject;
 import io.github.gcapizzi.lang.model.StringLangObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.toList;
-
-public class InterpreterLangVisitor implements LangVisitor<LangObject> {
+public class InterpreterLangVisitor implements LangVisitor {
     private Map<String, LangObject> context;
+    private List<LangObject> stack = new ArrayList<>();
 
     public InterpreterLangVisitor(Map<String, LangObject> context) {
         this.context = context;
     }
 
     @Override
-    public IntegerLangObject visit(IntegerLiteralNode integerLiteralNode) {
-        return new IntegerLangObject(integerLiteralNode.getValue());
+    public void visit(IntegerLiteralNode integerLiteralNode) {
+        push(new IntegerLangObject(integerLiteralNode.getValue()));
     }
 
     @Override
-    public StringLangObject visit(StringLiteralNode stringLiteralNode) {
-        return new StringLangObject(stringLiteralNode.getValue());
+    public void visit(StringLiteralNode stringLiteralNode) {
+        push(new StringLangObject(stringLiteralNode.getValue()));
     }
 
     @Override
-    public LangObject visit(VariableNode variableNode) {
-        return context.get(variableNode.getName());
+    public void visit(VariableNode variableNode) {
+        push(context.get(variableNode.getName()));
     }
 
     @Override
-    public LangObject visit(MethodCallsNode methodCallsNode) {
-        LangObject result = methodCallsNode.getTarget().evaluate(this);
+    public void visit(MethodCallsNode methodCallsNode) {
+        methodCallsNode.getTarget().evaluate(this);
 
         for (MethodCall methodCall : methodCallsNode.getMethodCalls()) {
-            List<LangObject> evaluatedArgs = methodCall.getArguments().stream()
-                    .map(arg -> arg.evaluate(this))
-                    .collect(toList());
-
-            result = result.invokeMethod(methodCall.getMethodName(), evaluatedArgs);
+            List<Node> arguments = methodCall.getArguments();
+            arguments.forEach(arg -> arg.evaluate(this));
+            List<LangObject> evaluatedArgs = popManyInOrder(arguments.size());
+            push(pop().invokeMethod(methodCall.getMethodName(), evaluatedArgs));
         }
+    }
 
-        return result;
+    private List<LangObject> popManyInOrder(int size) {
+        List<LangObject> poppedObjects = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            poppedObjects.add(pop());
+        }
+        return Lists.reverse(poppedObjects);
     }
 
     @Override
-    public LangObject visit(ProgramNode programNode) {
+    public void visit(ProgramNode programNode) {
         programNode.getStatements().forEach(s -> s.evaluate(this));
-        return null;
+    }
+
+    private void push(LangObject object) {
+        stack.add(object);
+    }
+
+    private LangObject pop() {
+        return stack.remove(stack.size() - 1);
     }
 }
