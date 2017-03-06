@@ -1,0 +1,31 @@
+module SucksRocksAction(sucks_rocks_service: SucksRocksService, json_encoder: JsonEncoder) :: Action {
+    call(request: Request): Response {
+        let query = request.get_query_param("q")
+        query.map(q -> {
+            score = sucks_rocks_service.invoke(q)
+	    response_body = json_encoder.encode({ "score" => score })
+	    Response(200, {}, response_body)
+        }).or_else(Response(500, {}, json_encoder.encode({ "error" => "Missin parameter 'q'" }))
+    }
+}
+
+module SucksRocksService(search_engine: SearchEngine) {
+    invoke(query: String): Integer {
+        sucks_size = search_engine.search(q.append(" sucks")).size()
+        rocks_size = search_engine.search(q.append(" rocks")).size()
+        sucks_size.on(rocks_size).times(100)
+    }
+}
+
+module SucksRocksApp :: Main {
+    run(args: List<String>) {
+	sucks_rocks_service = SucksRocksService(GoogleSearchEngine())
+	json_encoder = JsonEncoder()
+	sucks_rocks_action = SucksRocksAction(sucks_rocks_service, json_encoder)
+	routes = [Route("/", sucks_rocks_action)]
+	http_handler = Router(routes)
+        server = Server(http_handler)
+
+	server.start(8080)
+    }
+}

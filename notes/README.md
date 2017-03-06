@@ -1,0 +1,62 @@
+# Lang
+
+- object-oriented
+- everything is an object
+- classes
+- classes are objects
+    - instances of the Class class
+- interfaces
+- interfaces are objects
+    - instances of the Interface class
+- no inheritance
+- class variants
+    - a class can have multiple implementations
+    - all implementations MUST share the same exact public interface
+- no null
+    - provide an Option class instead
+- no exceptions
+    - provide a Result class instead
+- no pattern matching
+    - interfaces are the only polymorphism mechanism
+- no annotations
+    - always use plain old objects
+- no operators
+    - always use methods
+- no if
+    - provide an `if_true` method on the Boolean class instead
+    - needs lambdas!
+- no for
+    - provide a `for_each` method on the Iterable interface instead
+    - needs lambdas!
+- no public fields
+    - use getters and setters
+    - `attr_accessor`-like "macro"?
+    - value objects?
+- clean syntax
+    - no ambiguity
+    - braces or not?
+    - explicit parameter names?
+- designed with refactoring in mind
+- multiple targets
+    - JVM
+    - JavaScript
+    - LLVM
+- no mutability by default
+
+## Doubts
+
+- how to andle mutability and side effects?
+    - atoms?
+    - refs?
+- class/static methods?
+- concurrency?
+- reflection and metaprogramming?
+- generics?
+- covariance / contravariance / invariance?
+- object literals?
+- lambda literals?
+- anonymous classes?
+- structural subtyping?
+- data/value classes?
+- interoperability?
+- private constructor?
