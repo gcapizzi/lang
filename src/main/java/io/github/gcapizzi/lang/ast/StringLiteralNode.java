@@ -17,4 +17,11 @@ public class StringLiteralNode implements Node {
     public void evaluate(LangVisitor visitor) {
         visitor.visit(this);
     }
+
+    @Override
+    public String toString() {
+        return "StringLiteralNode{" +
+                "value='" + value + '\'' +
+                '}';
+    }
 }

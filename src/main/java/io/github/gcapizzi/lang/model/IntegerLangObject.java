@@ -3,9 +3,9 @@ package io.github.gcapizzi.lang.model;
 import java.util.List;
 
 public class IntegerLangObject implements LangObject {
-    private Integer value;
+    private int value;
 
-    public IntegerLangObject(Integer value) {
+    public IntegerLangObject(int value) {
         this.value = value;
     }
 
@@ -28,6 +28,6 @@ public class IntegerLangObject implements LangObject {
 
     @Override
     public String toString() {
-        return value.toString();
+        return String.valueOf(value);
     }
 }

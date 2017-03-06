@@ -28,8 +28,8 @@ class LangParser {
         final Parser<Character, Node> string = between(quote, quote, regex("[^\"]*")).bind(s -> retn(new StringLiteralNode(s)));
         final Parser<Character, Node> integer = intr.bind(i -> retn(new IntegerLiteralNode(i)));
         final Parser<Character, String> identifier = regex("[a-zA-Z_][a-zA-Z0-9_]+");
-        final Parser<Character, Node> variable = identifier.bind(i -> retn(new VariableNode(i)));
-        final Parser<Character, Node> atom = integer.or(string).or(variable);
+        final Parser<Character, Node> constant = identifier.bind(i -> retn(new ConstantNode(i)));
+        final Parser<Character, Node> atom = integer.or(string).or(constant);
 
         final Parser<Character, IList<Node>> argsList = sepBy(expression, comma.then(space.optional())).bind(args -> retn(args));
         final Parser<Character, IList<Node>> args = between(openParen, closedParen, argsList);

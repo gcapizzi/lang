@@ -25,4 +25,12 @@ public class MethodCallsNode implements Node {
     public void evaluate(LangVisitor visitor) {
         visitor.visit(this);
     }
+
+    @Override
+    public String toString() {
+        return "MethodCallsNode{" +
+                "target=" + target +
+                ", methodCalls=" + methodCalls +
+                '}';
+    }
 }

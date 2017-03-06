@@ -7,7 +7,7 @@ public interface LangVisitor {
 
     void visit(StringLiteralNode stringLiteralNode);
 
-    void visit(VariableNode variableNode);
+    void visit(ConstantNode constantNode);
 
     void visit(MethodCallsNode methodCallsNode);
 

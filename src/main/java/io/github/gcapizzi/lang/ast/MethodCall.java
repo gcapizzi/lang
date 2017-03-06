@@ -18,4 +18,12 @@ public class MethodCall {
     public List<Node> getArguments() {
         return arguments;
     }
+
+    @Override
+    public String toString() {
+        return "MethodCall{" +
+                "methodName='" + methodName + '\'' +
+                ", arguments=" + arguments +
+                '}';
+    }
 }

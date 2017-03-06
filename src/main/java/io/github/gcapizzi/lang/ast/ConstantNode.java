@@ -2,10 +2,10 @@ package io.github.gcapizzi.lang.ast;
 
 import io.github.gcapizzi.lang.visitor.LangVisitor;
 
-public class VariableNode implements Node {
+public class ConstantNode implements Node {
     private String name;
 
-    public VariableNode(String name) {
+    public ConstantNode(String name) {
         this.name = name;
     }
 
